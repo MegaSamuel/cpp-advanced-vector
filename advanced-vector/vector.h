@@ -298,6 +298,7 @@ public:
     // Возвращает итератор
     template<typename... Args>
     iterator Emplace(const_iterator pos, Args&&... args) {
+        assert(pos >= begin() && pos <= end());
         size_t shift = pos-begin();
         iterator result = nullptr;
         if (size_ == Capacity()) {
@@ -346,6 +347,7 @@ public:
 
     // Удаляет элемент вектора в указанной позиции
     iterator Erase(const_iterator pos) noexcept(std::is_nothrow_move_assignable_v<T>) {
+        assert(pos >= begin() && pos < end());
         size_t index = pos-begin();
         std::move(begin()+index+1, end(), begin()+index);
         PopBack();
